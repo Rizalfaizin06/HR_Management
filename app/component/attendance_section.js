@@ -5,31 +5,48 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import avatar from "../../assets/images/avatar.jpg";
 
-export function GetAttendance() {
-    const [attendanceData, setAttendanceData] = useState(null); // Use `attendanceData` for clarity
-
+export function GetAttendance({ dataPerPage = 10 }) {
+    const [attendanceData, setAttendanceData] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     useEffect(() => {
-        const fetchAttendanceData = async () => {
+        const fetchAttendanceData = async (page) => {
             try {
                 const response = await fetch(
-                    "http://localhost:4000/attendance"
-                ); // Use await for cleaner syntax
+                    `http://localhost:4000/attendance?_page=${page}&_per_page=${dataPerPage}`
+                );
 
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
 
                 const data = await response.json();
-                setAttendanceData(data);
+
+                setAttendanceData(data.data);
+                setTotalPages(data.pages); // Update total pages
             } catch (error) {
                 console.error("Error fetching attendance data:", error);
                 // Handle errors gracefully, e.g., display an error message to the user
             }
         };
 
-        fetchAttendanceData(); // Call the function to fetch data
-    }, []); // Empty dependency array ensures the effect runs only once on component mount
+        fetchAttendanceData(currentPage); // Fetch data initially
+    }, [currentPage, dataPerPage]); // Update on page change or data per page change
 
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
     return (
         <>
             {attendanceData && (
@@ -79,6 +96,61 @@ export function GetAttendance() {
                         </tr>
                     ))}
                 </tbody>
+            )}
+            {totalPages > 1 && ( // Only render pagination if more than one page
+                <div className="flex justify-center mt-4">
+                    {" "}
+                    {/* Add base class for pagination */}
+                    {/* {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                        (page) => (
+                            <button
+                                key={page}
+                                onClick={() => handlePageChange(page)}
+                                className={`px-2 py-1 text-xs font-medium text-center rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 active:bg-gray-400 ${
+                                    currentPage === page
+                                        ? "bg-indigo-500 text-white"
+                                        : ""
+                                }`}
+                            >
+                                {page}
+                            </button>
+                        )
+                    )} */}
+                    {totalPages > 1 && ( // Only render pagination if more than one page
+                        <div className="flex justify-center mt-4">
+                            <button
+                                className="px-2 py-1 text-xs font-medium rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-200 disabled:opacity-50"
+                                onClick={handlePreviousPage}
+                                disabled={currentPage === 1}
+                            >
+                                Previous
+                            </button>
+                            {Array.from(
+                                { length: totalPages },
+                                (_, i) => i + 1
+                            ).map((page) => (
+                                <button
+                                    key={page}
+                                    onClick={() => setCurrentPage(page)}
+                                    className={`px-2 py-1 text-xs font-medium text-center rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 active:bg-gray-400 ${
+                                        currentPage === page
+                                            ? "bg-indigo-500 text-white"
+                                            : ""
+                                    }`}
+                                >
+                                    {page}
+                                </button>
+                            ))}
+                            <button
+                                className="px-2 py-1 text-xs font-medium rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-200 disabled:opacity-50"
+                                onClick={handleNextPage}
+                                disabled={currentPage === totalPages}
+                            >
+                                Next
+                            </button>
+                        </div>
+                    )}
+                </div>
             )}
         </>
     );
