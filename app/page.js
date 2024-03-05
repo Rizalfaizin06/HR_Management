@@ -15,7 +15,7 @@ export default function MainPage() {
         <>
             <ContentContext.Provider value={{ content, setContent }}>
                 {/* <h1 className='bg-red-50'>{content}</h1> */}
-                <div className="flex flex-row">
+                <div className="flex flex-row overflow-hidden">
                     <SideBar>
                         <SidebarItem
                             icon={<Home size={20} />}
