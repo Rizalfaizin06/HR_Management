@@ -33,9 +33,9 @@ export function GetAttendance({ dataPerPage = 10 }) {
         fetchAttendanceData(currentPage); // Fetch data initially
     }, [currentPage, dataPerPage]); // Update on page change or data per page change
 
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
+    // const handlePageChange = (page) => {
+    //     setCurrentPage(page);
+    // };
     const handlePreviousPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
@@ -47,6 +47,16 @@ export function GetAttendance({ dataPerPage = 10 }) {
             setCurrentPage(currentPage + 1);
         }
     };
+
+    const getVisiblePages = () => {
+        const startPage = Math.max(1, currentPage - 2);
+        const endPage = Math.min(totalPages, currentPage + 2);
+        return Array.from(
+            { length: endPage - startPage + 1 },
+            (_, i) => startPage + i
+        );
+    };
+
     return (
         <>
             {attendanceData && (
@@ -125,10 +135,7 @@ export function GetAttendance({ dataPerPage = 10 }) {
                             >
                                 Previous
                             </button>
-                            {Array.from(
-                                { length: totalPages },
-                                (_, i) => i + 1
-                            ).map((page) => (
+                            {getVisiblePages().map((page) => (
                                 <button
                                     key={page}
                                     onClick={() => setCurrentPage(page)}
