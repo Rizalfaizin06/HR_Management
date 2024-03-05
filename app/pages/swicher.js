@@ -5,7 +5,7 @@ import SideBar, { SidebarItem } from "../component/sidebar";
 import { useContext, createContext, useState } from "react";
 import { ContentContext } from "../page";
 import HomePage from "./home";
-import AttendPage from "./attend";
+import AttendPage, { GetAttendance } from "./attend";
 import EmployePage from "./employee";
 
 export default function Switcher() {

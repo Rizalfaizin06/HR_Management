@@ -1,38 +1,244 @@
 {
-  "posts": [
-    {
-      "id": "1",
-      "title": "a title",
-      "views": 100
-    },
-    {
-      "id": "2",
-      "title": "another title",
-      "views": 200
-    },
-    {
-      "id": "3",
-      "title": "aadfasdfasnother title",
-      "views": 200
-    },
-    {
-      "id": "4"
+    "posts": [
+        {
+            "id": "1",
+            "title": "a title",
+            "views": 100
+        },
+        {
+            "id": "2",
+            "title": "another title",
+            "views": 200
+        },
+        {
+            "id": "3",
+            "title": "aadfasdfasnother title",
+            "views": 200
+        },
+        {
+            "id": "4"
+        }
+    ],
+    "attendance": [
+        {
+            "id": "1",
+            "avatar": "rizal.jpg",
+            "name": "Rizal Faizin Firdaus",
+            "position": "Fullstack Developer",
+            "date": "11-03-2024",
+            "checkIn": "08:56",
+            "breakIn": "12:01",
+            "breakOut": "12:55",
+            "checkOut": "16:07",
+            "workingHour": "8.12"
+        },
+        {
+            "id": "2",
+            "avatar": "Icha.jpg",
+            "name": "Icha Puspita",
+            "position": "Marketing",
+            "date": "11-03-2024",
+            "checkIn": "08:46",
+            "breakIn": "12:07",
+            "breakOut": "12:40",
+            "checkOut": "16:12",
+            "workingHour": "8.5"
+        },
+        {
+            "id": "3",
+            "avatar": "adi.jpg",
+            "name": "Adi Nugroho",
+            "position": "UI/UX Designer",
+            "date": "11-03-2024",
+            "checkIn": "09:00",
+            "breakIn": "12:15",
+            "breakOut": "12:45",
+            "checkOut": "16:30",
+            "workingHour": "8"
+        },
+        {
+            "id": "4",
+            "avatar": "nisa.jpg",
+            "name": "Nisa Rahmawati",
+            "position": "Front-End Developer",
+            "date": "11-03-2024",
+            "checkIn": "08:50",
+            "breakIn": "12:05",
+            "breakOut": "12:35",
+            "checkOut": "16:15",
+            "workingHour": "8.2"
+        },
+        {
+            "id": "5",
+            "avatar": "budi.jpg",
+            "name": "Budi Santoso",
+            "position": "Back-End Developer",
+            "date": "11-03-2024",
+            "checkIn": "09:10",
+            "breakIn": "12:20",
+            "breakOut": "12:50",
+            "checkOut": "16:20",
+            "workingHour": "7.5"
+        },
+        {
+            "id": "6",
+            "avatar": "rina.jpg",
+            "name": "Rina Agustina",
+            "position": "Data Scientist",
+            "date": "11-03-2024",
+            "checkIn": "08:30",
+            "breakIn": "12:00",
+            "breakOut": "12:30",
+            "checkOut": "16:00",
+            "workingHour": "8.5"
+        },
+        {
+            "id": "7",
+            "avatar": "andra.jpg",
+            "name": "Andra Gunawan",
+            "position": "Project Manager",
+            "date": "11-03-2024",
+            "checkIn": "09:20",
+            "breakIn": "12:30",
+            "breakOut": "12:55",
+            "checkOut": "16:40",
+            "workingHour": "8"
+        },
+        {
+            "id": "8",
+            "avatar": "dita.jpg",
+            "name": "Dita Pratiwi",
+            "position": "QA Engineer",
+            "date": "11-03-2024",
+            "checkIn": "08:45",
+            "breakIn": "12:10",
+            "breakOut": "12:40",
+            "checkOut": "16:10",
+            "workingHour": "8.1"
+        },
+        {
+            "id": "9",
+            "avatar": "eko.jpg",
+            "name": "Eko Wahyudi",
+            "position": "DevOps Engineer",
+            "date": "11-03-2024",
+            "checkIn": "09:05",
+            "breakIn": "12:25",
+            "breakOut": "12:55",
+            "checkOut": "16:35",
+            "workingHour": "8"
+        },
+        {
+            "id": "10",
+            "avatar": "lina.jpg",
+            "name": "Lina Sari",
+            "position": "System Administrator",
+            "date": "11-03-2024",
+            "checkIn": "08:55",
+            "breakIn": "12:15",
+            "breakOut": "12:45",
+            "checkOut": "16:25",
+            "workingHour": "8.2"
+        },
+        {
+            "id": "11",
+            "avatar": "beni.jpg",
+            "name": "Beni Setiawan",
+            "position": "Graphic Designer",
+            "date": "11-03-2024",
+            "checkIn": "09:15",
+            "breakIn": "12:30",
+            "breakOut": "12:50",
+            "checkOut": "16:45",
+            "workingHour": "7.5"
+        },
+        {
+            "id": "12",
+            "avatar": "winda.jpg",
+            "name": "Winda Lestari",
+            "position": "Content Writer",
+            "date": "11-03-2024",
+            "checkIn": "08:35",
+            "breakIn": "12:05",
+            "breakOut": "12:35",
+            "checkOut": "16:05",
+            "workingHour": "8.2"
+        },
+        {
+            "id": "13",
+            "avatar": "toni.jpg",
+            "name": "Toni Supriyanto",
+            "position": "Social Media Specialist",
+            "date": "11-03-2024",
+            "checkIn": "09:25",
+            "breakIn": "12:35",
+            "breakOut": "12:55",
+            "checkOut": "16:55",
+            "workingHour": "8"
+        },
+        {
+            "id": "14",
+            "avatar": "yanti.jpg",
+            "name": "Yanti Susanti",
+            "position": "Customer Service",
+            "date": "11-03-2024",
+            "checkIn": "08:40",
+            "breakIn": "12:10",
+            "breakOut": "12:40",
+            "checkOut": "16:10",
+            "workingHour": "8.1"
+        },
+        {
+            "id": "15",
+            "avatar": "dian.jpg",
+            "name": "Dian Rahmawati",
+            "position": "Human Resource",
+            "date": "11-03-2024",
+            "checkIn": "09:00",
+            "breakIn": "12:20",
+            "breakOut": "12:50",
+            "checkOut": "16:30",
+            "workingHour": "8"
+        },
+        {
+            "id": "16",
+            "avatar": "andre.jpg",
+            "name": "Andre Gunawan",
+            "position": "Finance",
+            "date": "11-03-2024",
+            "checkIn": "08:50",
+            "breakIn": "12:15",
+            "breakOut": "12:45",
+            "checkOut": "16:20",
+            "workingHour": "8.1"
+        },
+        {
+            "id": "17",
+            "avatar": "maya.jpg",
+            "name": "Maya Sari",
+            "position": "Marketing",
+            "date": "11-03-2024",
+            "checkIn": "09:10",
+            "breakIn": "12:25",
+            "breakOut": "12:55",
+            "checkOut": "16:40",
+            "workingHour": "8"
+        },
+        {
+            "id": "18",
+            "avatar": "ricky.jpg",
+            "name": "Ricky Hardianto",
+            "position": "Sales",
+            "date": "11-03-2024",
+            "checkIn": "08:30",
+            "breakIn": "12:00",
+            "breakOut": "12:30",
+            "checkOut": "16:00",
+            "workingHour": "8.5"
+        }
+    ],
+    "profile": {
+        "name": "typicode",
+        "age": 23
     }
-  ],
-  "comments": [
-    {
-      "id": "1",
-      "text": "a comment about post 1",
-      "postId": "1"
-    },
-    {
-      "id": "2",
-      "text": "another comment about post 1",
-      "postId": "1"
-    }
-  ],
-  "profile": {
-    "name": "typicode",
-    "age": 23
-  }
 }

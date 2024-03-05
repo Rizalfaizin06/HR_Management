@@ -1,16 +1,17 @@
-"use client";
 import { BarChart3 } from "lucide-react";
 
 import SideBar, { SidebarItem } from "../component/sidebar";
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext, useState, useEffect } from "react";
 import { ContentContext } from "../page";
 
 import Image from "next/image";
 import avatar from "../../assets/images/avatar.jpg";
+import { AttendanceListSection } from "../component/attendance_section";
 
 export default function AttendPage() {
     return (
         <div className="flex flex-col w-full">
+            <getAttendance />
             <div className="flex flex-row items-center p-3 justify-between border-b shadow-md">
                 <div className="flex flex-row justify-between w-full gap-5  ">
                     <div className="flex flex-row justify-start w-full gap-5  ">
@@ -119,7 +120,7 @@ export default function AttendPage() {
                 <div className=" w-full h-48 my-4 rounded-2xl flex flex-row items-center border border-3 shadow-xl">
                     <div className="flex flex-col items-center justify-center h-full w-full">
                         <h1 className="font-medium text-3xl text-gray-600">
-                            3210
+                            8.1
                         </h1>
                         <span className="font-bold text-md text-gray-600">
                             Average Working Hours
@@ -129,7 +130,7 @@ export default function AttendPage() {
                     <div className="w-1 bg-slate-50 rounded border h-32"></div>
                     <div className="flex flex-col items-center justify-center h-full w-full">
                         <h1 className="font-medium text-3xl text-gray-600">
-                            123
+                            1.2
                         </h1>
                         <span className="font-bold text-md text-gray-600">
                             Average Break Hours
@@ -139,7 +140,7 @@ export default function AttendPage() {
                     <div className="w-1 bg-slate-50 rounded border h-32"></div>
                     <div className="flex flex-col items-center justify-center h-full w-full">
                         <h1 className="font-medium text-3xl text-gray-600">
-                            42
+                            2.3
                         </h1>
                         <span className="font-bold text-md text-gray-600">
                             Average Overtime Hours
@@ -149,270 +150,7 @@ export default function AttendPage() {
                     <div className="w-1 bg-slate-50 rounded border h-32"></div>
                 </div>
             </div>
-            <div className="p-4">
-                <div className="  flex-1 font-semibold text-xl">
-                    Daily Attendance List
-                </div>
-                <div className=" w-full h-full overflow-hidden my-4 rounded-2xl flex flex-row items-center border border-3 shadow-xl">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 w-14">
-                                    Profile
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Name
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Position
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Check In
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Check Out
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Break In
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Break Out
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Working Hours
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-6 py-4  w-14">
-                                    <div className="rounded-full bg-slate-400 h-10 w-10 overflow-hidden flex items-center border shadow-md  border-gray-100">
-                                        <Image
-                                            className=""
-                                            width={40}
-                                            height={40}
-                                            src={avatar}
-                                        ></Image>
-                                    </div>
-                                </td>
-                                <th
-                                    scope="row"
-                                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                                >
-                                    {/* <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Jese image"> */}
-                                    <div class="ps-3">
-                                        <div class="text-base font-semibold">
-                                            Rizal Faizin Firdaus
-                                        </div>
-                                        <div class="font-normal text-gray-500">
-                                            rizal.faizin@inovasi360.com
-                                        </div>
-                                    </div>
-                                </th>
-                                <td class="px-6 py-4">React Developer</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">8,12 Hours</td>
-                            </tr>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-6 py-4  w-14">
-                                    <div className="rounded-full bg-slate-400 h-10 w-10 overflow-hidden flex items-center border shadow-md  border-gray-100">
-                                        <Image
-                                            className=""
-                                            width={40}
-                                            height={40}
-                                            src={avatar}
-                                        ></Image>
-                                    </div>
-                                </td>
-                                <th
-                                    scope="row"
-                                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                                >
-                                    {/* <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Jese image"> */}
-                                    <div class="ps-3">
-                                        <div class="text-base font-semibold">
-                                            Rizal Faizin Firdaus
-                                        </div>
-                                        <div class="font-normal text-gray-500">
-                                            rizal.faizin@inovasi360.com
-                                        </div>
-                                    </div>
-                                </th>
-                                <td class="px-6 py-4">React Developer</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">8,12 Hours</td>
-                            </tr>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-6 py-4  w-14">
-                                    <div className="rounded-full bg-slate-400 h-10 w-10 overflow-hidden flex items-center border shadow-md  border-gray-100">
-                                        <Image
-                                            className=""
-                                            width={40}
-                                            height={40}
-                                            src={avatar}
-                                        ></Image>
-                                    </div>
-                                </td>
-                                <th
-                                    scope="row"
-                                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                                >
-                                    {/* <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Jese image"> */}
-                                    <div class="ps-3">
-                                        <div class="text-base font-semibold">
-                                            Rizal Faizin Firdaus
-                                        </div>
-                                        <div class="font-normal text-gray-500">
-                                            rizal.faizin@inovasi360.com
-                                        </div>
-                                    </div>
-                                </th>
-                                <td class="px-6 py-4">React Developer</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">8,12 Hours</td>
-                            </tr>
-                            <tr class="bg-red-200 border-b    dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-6 py-4  w-14">
-                                    <div className="rounded-full bg-slate-400 h-10 w-10 overflow-hidden flex items-center border shadow-md  border-gray-100">
-                                        <Image
-                                            className=""
-                                            width={40}
-                                            height={40}
-                                            src={avatar}
-                                        ></Image>
-                                    </div>
-                                </td>
-                                <th
-                                    scope="row"
-                                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                                >
-                                    {/* <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Jese image"> */}
-                                    <div class="ps-3">
-                                        <div class="text-base font-semibold">
-                                            Rizal Faizin Firdaus
-                                        </div>
-                                        <div class="font-normal text-gray-500">
-                                            rizal.faizin@inovasi360.com
-                                        </div>
-                                    </div>
-                                </th>
-                                <td class="px-6 py-4">React Developer</td>
-                                <td
-                                    colSpan={5}
-                                    class="px-6 py-4 text-center font-bold"
-                                >
-                                    Absent
-                                </td>
-                            </tr>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-6 py-4  w-14">
-                                    <div className="rounded-full bg-slate-400 h-10 w-10 overflow-hidden flex items-center border shadow-md  border-gray-100">
-                                        <Image
-                                            className=""
-                                            width={40}
-                                            height={40}
-                                            src={avatar}
-                                        ></Image>
-                                    </div>
-                                </td>
-                                <th
-                                    scope="row"
-                                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                                >
-                                    {/* <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Jese image"> */}
-                                    <div class="ps-3">
-                                        <div class="text-base font-semibold">
-                                            Rizal Faizin Firdaus
-                                        </div>
-                                        <div class="font-normal text-gray-500">
-                                            rizal.faizin@inovasi360.com
-                                        </div>
-                                    </div>
-                                </th>
-                                <td class="px-6 py-4">React Developer</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">8,12 Hours</td>
-                            </tr>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-6 py-4  w-14">
-                                    <div className="rounded-full bg-slate-400 h-10 w-10 overflow-hidden flex items-center border shadow-md  border-gray-100">
-                                        <Image
-                                            className=""
-                                            width={40}
-                                            height={40}
-                                            src={avatar}
-                                        ></Image>
-                                    </div>
-                                </td>
-                                <th
-                                    scope="row"
-                                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                                >
-                                    {/* <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Jese image"> */}
-                                    <div class="ps-3">
-                                        <div class="text-base font-semibold">
-                                            Rizal Faizin Firdaus
-                                        </div>
-                                        <div class="font-normal text-gray-500">
-                                            rizal.faizin@inovasi360.com
-                                        </div>
-                                    </div>
-                                </th>
-                                <td class="px-6 py-4">React Developer</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">8,12 Hours</td>
-                            </tr>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-6 py-4  w-14">
-                                    <div className="rounded-full bg-slate-400 h-10 w-10 overflow-hidden flex items-center border shadow-md  border-gray-100">
-                                        <Image
-                                            className=""
-                                            width={40}
-                                            height={40}
-                                            src={avatar}
-                                        ></Image>
-                                    </div>
-                                </td>
-                                <th
-                                    scope="row"
-                                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                                >
-                                    {/* <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Jese image"> */}
-                                    <div class="ps-3">
-                                        <div class="text-base font-semibold">
-                                            Rizal Faizin Firdaus
-                                        </div>
-                                        <div class="font-normal text-gray-500">
-                                            rizal.faizin@inovasi360.com
-                                        </div>
-                                    </div>
-                                </th>
-                                <td class="px-6 py-4">React Developer</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">08:56</td>
-                                <td class="px-6 py-4">8,12 Hours</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <AttendanceListSection />
         </div>
     );
 }
