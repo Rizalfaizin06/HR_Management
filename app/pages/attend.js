@@ -12,17 +12,17 @@ export default function AttendPage() {
     const [isPopupOpen, setIsPopupOpen] = useState(false); // State untuk membuka/menutup popup
     const [formData, setFormData] = useState({
         // Define initial state for form data
-        id: "1000",
-        avatar: "rizal.jpg",
-        name: "Rizal Faizin Firdaus",
+        id: "11000",
+        avatar: "-",
+        name: "-",
         position: "Fullstack Developer",
-        date: "11-03-2024",
+        date: "-",
         attend: true, // Set attend to "false" for marking absent
-        checkIn: "08:56",
-        breakIn: "12:01",
-        breakOut: "12:55",
-        checkOut: "16:07",
-        workingHour: "8.12",
+        checkIn: "-",
+        breakIn: "-",
+        breakOut: "-",
+        checkOut: "-",
+        workingHour: "-",
     });
 
     const handleButtonClick = async () => {
@@ -44,11 +44,35 @@ export default function AttendPage() {
             }
 
             // Handle successful response (e.g., display success message)
+            setFormData({
+                // Define initial state for form data
+                id: "11000",
+                avatar: "-",
+                name: "-",
+                position: "Fullstack Developer",
+                date: "-",
+                attend: true, // Set attend to "false" for marking absent
+                checkIn: "-",
+                breakIn: "-",
+                breakOut: "-",
+                checkOut: "-",
+                workingHour: "-",
+            });
+            setIsPopupOpen(false);
             console.log("Data posted successfully:", await response.json());
         } catch (error) {
             // Handle errors appropriately (e.g., display error message to user)
             console.error("Error posting data:", error);
         }
+    };
+
+    const isButtonDisabled = () => {
+        return (
+            formData.name === "-" ||
+            formData.name === "" ||
+            formData.date === "-" ||
+            formData.date === ""
+        );
     };
 
     return (
@@ -58,13 +82,13 @@ export default function AttendPage() {
                 tabindex="-1"
                 class={` ${
                     isPopupOpen ? "grid" : "hidden"
-                }  overflow-y-auto overflow-x-hidden fixed  place-items-center bg-black bg-opacity-70 top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
+                }     overflow-y-auto overflow-x-hidden fixed  place-items-center bg-black bg-opacity-70 top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
             >
                 <div class="relative p-4 w-full max-w-md max-h-full">
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                         <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                Create New Product
+                                Add Attendance
                             </h3>
                             <button
                                 onClick={() => setIsPopupOpen(false)}
@@ -92,12 +116,12 @@ export default function AttendPage() {
                         </div>
                         <div class="p-4 md:p-5">
                             <div class="grid gap-4 mb-4 grid-cols-2">
-                                <div class="col-span-2 sm:col-span-1">
+                                <div class="col-span-2">
                                     <label
-                                        for="price"
+                                        for="name"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >
-                                        Price
+                                        Name
                                     </label>
                                     <input
                                         type="text"
@@ -106,7 +130,6 @@ export default function AttendPage() {
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Type product name"
                                         required=""
-                                        value={formData.name}
                                         onChange={(e) =>
                                             setFormData({
                                                 ...formData,
@@ -115,12 +138,34 @@ export default function AttendPage() {
                                         }
                                     ></input>
                                 </div>
+
                                 <div class="col-span-2 sm:col-span-1">
                                     <label
-                                        for="price"
+                                        for="date"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >
-                                        Price
+                                        date
+                                    </label>
+                                    <input
+                                        type="date"
+                                        id="date"
+                                        name="date"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        required=""
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                date: e.target.value,
+                                            })
+                                        }
+                                    ></input>
+                                </div>
+                                <div class="col-span-2 sm:col-span-1">
+                                    <label
+                                        for="attend"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    >
+                                        Attend
                                     </label>
                                     <select
                                         id="attend"
@@ -142,92 +187,104 @@ export default function AttendPage() {
                                 </div>
                                 <div class="col-span-2 sm:col-span-1">
                                     <label
-                                        for="price"
+                                        for="checkIn"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >
-                                        Price
+                                        checkIn
                                     </label>
                                     <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Type product name"
+                                        disabled={formData.attend === "false"}
+                                        type="time"
+                                        id="checkIn"
+                                        name="checkIn"
+                                        class={`${
+                                            formData.attend === "false"
+                                                ? "bg-gray-400"
+                                                : "bg-gray-50"
+                                        } border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500`}
                                         required=""
-                                        value={formData.name}
                                         onChange={(e) =>
                                             setFormData({
                                                 ...formData,
-                                                name: e.target.value,
+                                                checkIn: e.target.value,
                                             })
                                         }
                                     ></input>
                                 </div>
                                 <div class="col-span-2 sm:col-span-1">
                                     <label
-                                        for="category"
+                                        for="checkOut"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >
-                                        Category
+                                        Check Out
                                     </label>
                                     <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Type product name"
+                                        disabled={formData.attend === "false"}
+                                        type="time"
+                                        id="checkOut"
+                                        name="checkOut"
+                                        class={`${
+                                            formData.attend === "false"
+                                                ? "bg-gray-400"
+                                                : "bg-gray-50"
+                                        } border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500`}
                                         required=""
-                                        value={formData.name}
                                         onChange={(e) =>
                                             setFormData({
                                                 ...formData,
-                                                name: e.target.value,
+                                                checkOut: e.target.value,
                                             })
                                         }
                                     ></input>
                                 </div>
                                 <div class="col-span-2 sm:col-span-1">
                                     <label
-                                        for="price"
+                                        for="breakIn"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >
-                                        Price
+                                        Break In
                                     </label>
                                     <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Type product name"
+                                        disabled={formData.attend === "false"}
+                                        type="time"
+                                        id="breakIn"
+                                        name="breakIn"
+                                        class={`${
+                                            formData.attend === "false"
+                                                ? "bg-gray-400"
+                                                : "bg-gray-50"
+                                        } border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500`}
                                         required=""
-                                        value={formData.name}
                                         onChange={(e) =>
                                             setFormData({
                                                 ...formData,
-                                                name: e.target.value,
+                                                breakIn: e.target.value,
                                             })
                                         }
                                     ></input>
                                 </div>
                                 <div class="col-span-2 sm:col-span-1">
                                     <label
-                                        for="category"
+                                        for="breakOut"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >
-                                        Category
+                                        Break Out
                                     </label>
                                     <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Type product name"
+                                        disabled={formData.attend === "false"}
+                                        type="time"
+                                        id="breakOut"
+                                        name="breakOut"
+                                        class={`${
+                                            formData.attend === "false"
+                                                ? "bg-gray-400"
+                                                : "bg-gray-50"
+                                        } border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500`}
                                         required=""
-                                        value={formData.name}
                                         onChange={(e) =>
                                             setFormData({
                                                 ...formData,
-                                                name: e.target.value,
+                                                breakOut: e.target.value,
                                             })
                                         }
                                     ></input>
@@ -248,8 +305,13 @@ export default function AttendPage() {
                                 </div>
                             </div>
                             <button
+                                disabled={isButtonDisabled()}
                                 onClick={handleButtonClick}
-                                class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                class={`${
+                                    isButtonDisabled()
+                                        ? "bg-gray-400"
+                                        : "bg-primary"
+                                } bg-gray-50 ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
                             >
                                 Submit
                             </button>
@@ -257,6 +319,7 @@ export default function AttendPage() {
                     </div>
                 </div>
             </div>
+
             <getAttendance />
             <div className="flex flex-row items-center p-3 justify-between border-b shadow-md">
                 <div className="flex flex-row justify-between w-full gap-5  ">
@@ -362,9 +425,8 @@ export default function AttendPage() {
                     <button
                         onClick={() => setIsPopupOpen(true)}
                         type="button"
-                        class="text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-40"
+                        class="bg-primary text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-40"
                     >
-                        {" "}
                         Add Absent
                     </button>
 
@@ -413,6 +475,11 @@ export default function AttendPage() {
                     <div className="w-1 bg-slate-50 rounded border h-32"></div>
                 </div>
             </div>
+            {/* {isPopupOpen === false ? (
+                // <h1>ydhfdjhh</h1>
+                <AttendanceListSection />
+            ) : (
+            )} */}
             <AttendanceListSection />
         </div>
     );

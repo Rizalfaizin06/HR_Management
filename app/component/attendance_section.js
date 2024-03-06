@@ -13,7 +13,7 @@ export function GetAttendance({ dataPerPage = 3 }) {
         const fetchAttendanceData = async (page) => {
             try {
                 const response = await fetch(
-                    `http://localhost:4000/attendance?_page=${page}&_per_page=${dataPerPage}`
+                    `http://localhost:4000/attendance?_sort=-id&_page=${page}&_per_page=${dataPerPage}`
                 );
 
                 if (!response.ok) {
