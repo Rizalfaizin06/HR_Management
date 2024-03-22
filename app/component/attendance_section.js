@@ -13,16 +13,17 @@ export function GetAttendance({ dataPerPage = 3 }) {
         const fetchAttendanceData = async (page) => {
             try {
                 const response = await fetch(
-                    `http://localhost:4000/attendance?_sort=-id&_page=${page}&_per_page=${dataPerPage}`
+                    `http://localhost:4000/attendances/pagination?page=${page}&dataPerPage=${dataPerPage}`
                 );
 
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
-
+                console.log("tessssss");
                 const data = await response.json();
+                console.log(data);
 
-                setAttendanceData(data.data);
+                setAttendanceData(data.items);
                 setTotalPages(data.pages); // Update total pages
             } catch (error) {
                 console.error("Error fetching attendance data:", error);
@@ -61,50 +62,73 @@ export function GetAttendance({ dataPerPage = 3 }) {
         <>
             {attendanceData && (
                 <tbody>
-                    {attendanceData.map((employee) => (
-                        <tr
-                            key={employee.id}
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        >
-                            <td class="px-6 py-4  w-14">
-                                <div className="rounded-full bg-slate-400 h-10 w-10 overflow-hidden flex items-center border shadow-md  border-gray-100">
-                                    <img
-                                        src={`https://picsum.photos/id/${employee.id}/200/300`}
-                                    ></img>
+                    {attendanceData.map(
+                        (attendance) => (
+                            // attendance.attend && (
 
-                                    {/* <Image
+                            <tr
+                                key={attendance.attendanceId}
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                            >
+                                <td class="px-6 py-4  w-14">
+                                    <div className="rounded-full bg-slate-400 h-10 w-10 overflow-hidden flex items-center border shadow-md  border-gray-100">
+                                        <img
+                                            src={`https://picsum.photos/id/${attendance.attendanceId}/200/300`}
+                                        ></img>
+
+                                        {/* <Image
                                         className=""
                                         width={40}
                                         height={40}
                                         src={'avatar'}
                                     ></Image> */}
-                                </div>
-                            </td>
-                            <th
-                                scope="row"
-                                class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                            >
-                                {/* <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Jese image"> */}
-                                <div class="ps-3">
-                                    <div class="text-base font-semibold">
-                                        {employee.name}
                                     </div>
-                                    <div class="font-normal text-gray-500">
-                                        {employee.checkIn}
+                                </td>
+                                <th
+                                    scope="row"
+                                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                                >
+                                    {/* <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Jese image"> */}
+                                    <div class="ps-3">
+                                        <div class="text-base font-semibold">
+                                            {attendance.Employee.name}
+                                        </div>
                                     </div>
-                                </div>
-                            </th>
-                            <td class="px-6 py-4">{employee.position}</td>
-                            <td class="px-6 py-4">{employee.date}</td>
-                            <td class="px-6 py-4">{employee.checkIn}</td>
-                            <td class="px-6 py-4">{employee.breakIn}</td>
-                            <td class="px-6 py-4">{employee.breakOut}</td>
-                            <td class="px-6 py-4">{employee.checkOut}</td>
-                            <td class="px-6 py-4">
-                                {employee.workingHour} Hours
-                            </td>
-                        </tr>
-                    ))}
+                                </th>
+                                <td class="px-6 py-4">
+                                    {attendance.Employee.position}
+                                </td>
+                                <td class="px-6 py-4">{attendance.date}</td>
+                                {attendance.attend ? (
+                                    <>
+                                        <td class="px-6 py-4">
+                                            {attendance.checkIn}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {attendance.breakIn}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {attendance.breakOut}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {attendance.checkOut}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {attendance.workingHour} Hours
+                                        </td>
+                                    </>
+                                ) : (
+                                    <td
+                                        class="px-6 py-4 bg bg-red-300 text-gray-700 text-center text-xl font-medium"
+                                        colSpan={5}
+                                    >
+                                        Absent
+                                    </td>
+                                )}
+                            </tr>
+                        )
+                        // )
+                    )}
                 </tbody>
             )}
             {totalPages > 1 && ( // Only render pagination if more than one page

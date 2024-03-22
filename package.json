@@ -1,6 +1,7 @@
 {
     "scripts": {
-        "dev": "next dev & npx json-server -p 4000 db.json"
+        "dev": "next dev",
+        "jsonServer": "next dev & npx json-server -p 4000 db.json"
     },
     "dependencies": {
         "@emotion/react": "^11.11.4",

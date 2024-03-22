@@ -1,6 +1,6 @@
 "use client";
 import { BarChart3, BookUser, Home, Minimize, Users } from "lucide-react";
-import LikeButton from "./component/like-button";
+// import LikeButton from "./component/like-button";
 import SideBar, { SidebarItem } from "./component/sidebar";
 import HomePage from "./pages/home";
 import Switcher from "./pages/swicher";

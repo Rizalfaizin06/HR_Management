@@ -19,13 +19,14 @@ import EmployeeCard from "../component/employee-card";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function EmployePage() {
-    const [employeeData, setEmployeeData] = useState(null); // Use `employeeData` for clarity
+export default function EmployePage({ dataPerPage = 6 }) {
+    const [employeeData, setEmployeeData] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1); // Use `employeeData` for clarity
     const [totalItems, setTotalItems] = useState(0); // Use `employeeData` for clarity
     const [isPopupOpen, setIsPopupOpen] = useState(false); // State untuk membuka/menutup popup
     const [formData, setFormData] = useState({
         // Define initial state for form data
-        id: "10000",
         avatar: "-",
         name: "-",
         departement: "-",
@@ -35,6 +36,34 @@ export default function EmployePage() {
         status: true,
     });
 
+    // const addEmployee = async () => {
+    //     try {
+    //         const response = await fetch(
+    //             "http://localhost:4000/employee?_page=1&_per_page=1"
+    //         );
+
+    //         if (!response.ok) {
+    //             // Check for successful response
+    //             throw new Error(
+    //                 `API request failed with status ${response.status}`
+    //             );
+    //         }
+
+    //         const data = await response.json();
+
+    //         setTotalItems(data.items);
+    //         console.log(totalItems);
+
+    //         setFormData({ ...formData, id: totalItems });
+    //         console.log("tessss:", formData);
+
+    //         const add = await submitAddEmployee();
+    //         // submitAddEmployee();
+    //     } catch (error) {
+    //         // Handle errors appropriately (e.g., display error message to user)
+    //         console.error("Error posting data:", error);
+    //     }
+    // };
     const addEmployee = async () => {
         try {
             const response = await fetch("http://localhost:4000/employee", {
@@ -56,7 +85,6 @@ export default function EmployePage() {
             // Handle successful response (e.g., display success message)
             setFormData({
                 // Define initial state for form data
-                id: "100002",
                 avatar: "-",
                 name: "-",
                 departement: "-",
@@ -67,6 +95,7 @@ export default function EmployePage() {
             });
             // fetchEmpployee();
             setIsPopupOpen(false);
+
             console.log("Data posted successfully:", await response.json());
         } catch (error) {
             // Handle errors appropriately (e.g., display error message to user)
@@ -78,56 +107,57 @@ export default function EmployePage() {
         false;
         // return formData.name === "-" || formData.name === "";
     };
-    function fetchTotalItems() {
-        useEffect(() => {
-            const fetchItems = async () => {
-                try {
-                    const response = await fetch(
-                        "http://localhost:4000/employee"
-                    ); // Use await for cleaner syntax
 
-                    if (!response.ok) {
-                        throw new Error("Network response was not ok");
-                    }
-
-                    const data = await response.json();
-                    setTotalItems(data.items);
-                } catch (error) {
-                    console.error("Error fetching employee   data:", error);
-                    // Handle errors gracefully, e.g., display an error message to the user
-                }
-            };
-
-            fetchItems(); // Call the function to fetch data
-        }, []);
-    }
     // addEmployee();
-    fetchTotalItems();
-    function fetchEmpployee() {
-        useEffect(() => {
-            const fetchEmployeeData = async () => {
-                try {
-                    const response = await fetch(
-                        "http://localhost:4000/employee?_sort=-id"
-                    ); // Use await for cleaner syntax
 
-                    if (!response.ok) {
-                        throw new Error("Network response was not ok");
-                    }
+    useEffect(() => {
+        const fetchEmployeeData = async (page) => {
+            try {
+                const response = await fetch(
+                    `http://localhost:4000/employee?_sort=-id&_page=${page}&_per_page=${dataPerPage}`
+                ); // Use await for cleaner syntax
 
-                    const data = await response.json();
-                    setEmployeeData(data);
-                } catch (error) {
-                    console.error("Error fetching employee   data:", error);
-                    // Handle errors gracefully, e.g., display an error message to the user
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
                 }
-            };
 
-            fetchEmployeeData(); // Call the function to fetch data
-        }, []);
-    }
+                const data = await response.json();
+                setEmployeeData(data.data);
+                setTotalPages(data.pages); // Update total pages
+            } catch (error) {
+                console.error("Error fetching employee   data:", error);
+                // Handle errors gracefully, e.g., display an error message to the user
+            }
+        };
+
+        fetchEmployeeData(currentPage); // Call the function to fetch data
+    }, [currentPage, dataPerPage]);
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const getVisiblePages = () => {
+        const startPage = Math.max(1, currentPage - 2);
+        const endPage = Math.min(totalPages, currentPage + 2);
+        return Array.from(
+            { length: endPage - startPage + 1 },
+            (_, i) => startPage + i
+        );
+    };
+
+    const startNumber = () => {
+        currentPage * dataPerPage;
+    };
+
     // addEmployee();
-    fetchEmpployee();
 
     return (
         <div className="flex flex-col w-full">
@@ -413,7 +443,12 @@ export default function EmployePage() {
                             // console.log(employee.name);
                             <EmployeeCard
                                 key={employee.id}
-                                number={index + 1}
+                                number={
+                                    currentPage * dataPerPage +
+                                    index -
+                                    dataPerPage +
+                                    1
+                                }
                                 id={employee.id}
                                 avatar={employee.avatar}
                                 name={employee.name}
@@ -427,6 +462,92 @@ export default function EmployePage() {
                     </>
                 )}
             </div>
+            <nav
+                aria-label="Page navigation example "
+                className=" grid place-items-center justify-items-center"
+            >
+                <ul class="flex items-center  -space-x-px h-10 text-base">
+                    <li>
+                        <button
+                            class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            onClick={handlePreviousPage}
+                            disabled={currentPage === 1}
+                        >
+                            <span class="sr-only">Previous</span>
+                            <svg
+                                class="w-3 h-3 rtl:rotate-180"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 6 10"
+                            >
+                                <path
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 1 1 5l4 4"
+                                />
+                            </svg>
+                        </button>
+                    </li>
+
+                    {getVisiblePages().map((page) => (
+                        // <button
+                        //     key={page}
+                        //     onClick={() => setCurrentPage(page)}
+                        //     className={`px-2 py-1 text-xs font-medium text-center rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 active:bg-gray-400 ${
+                        //         currentPage === page
+                        //             ? "bg-indigo-500 text-white"
+                        //             : ""
+                        //     }`}
+                        // >
+                        //     {page}
+                        // </button>
+                        <li>
+                            <button
+                                key={page}
+                                onClick={() => setCurrentPage(page)}
+                                class={` flex flex-row items-center justify-center px-4 h-10 leading-tight 
+                                        ${
+                                            currentPage === page
+                                                ? "z-10  text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                                                : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                        }
+                                        
+                                        `}
+                            >
+                                {page}
+                            </button>
+                        </li>
+                    ))}
+
+                    <li>
+                        <button
+                            class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            onClick={handleNextPage}
+                            disabled={currentPage === totalPages}
+                        >
+                            <span class="sr-only">Next</span>
+                            <svg
+                                class="w-3 h-3 rtl:rotate-180"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 6 10"
+                            >
+                                <path
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="m1 9 4-4-4-4"
+                                />
+                            </svg>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
         </div>
     );
 }

@@ -11,23 +11,20 @@ import { AttendanceListSection } from "../component/attendance_section";
 export default function AttendPage() {
     const [isPopupOpen, setIsPopupOpen] = useState(false); // State untuk membuka/menutup popup
     const [formData, setFormData] = useState({
-        // Define initial state for form data
-        id: "11000",
-        avatar: "-",
-        name: "-",
-        position: "Fullstack Developer",
-        date: "-",
-        attend: true, // Set attend to "false" for marking absent
-        checkIn: "-",
-        breakIn: "-",
-        breakOut: "-",
-        checkOut: "-",
-        workingHour: "-",
+        attendanceId: null,
+        employeeId: "-",
+        date: "2024-03-13",
+        attend: "true",
+        checkIn: "14:50",
+        breakIn: "14:52",
+        breakOut: "17:49",
+        checkOut: "17:49",
+        workingHour: "8",
     });
 
     const handleButtonClick = async () => {
         try {
-            const response = await fetch("http://localhost:4000/attendance", {
+            const response = await fetch("http://localhost:4000/attendances", {
                 // Fetch using async/await
                 method: "POST",
                 headers: {
@@ -46,17 +43,15 @@ export default function AttendPage() {
             // Handle successful response (e.g., display success message)
             setFormData({
                 // Define initial state for form data
-                id: "11000",
-                avatar: "-",
-                name: "-",
-                position: "Fullstack Developer",
-                date: "-",
-                attend: true, // Set attend to "false" for marking absent
-                checkIn: "-",
-                breakIn: "-",
-                breakOut: "-",
-                checkOut: "-",
-                workingHour: "-",
+                attendanceId: null,
+                employeeId: "-",
+                date: "2024-03-13",
+                attend: "true",
+                checkIn: "14:50",
+                breakIn: "14:52",
+                breakOut: "17:49",
+                checkOut: "17:49",
+                workingHour: "8",
             });
             setIsPopupOpen(false);
             console.log("Data posted successfully:", await response.json());
@@ -125,15 +120,15 @@ export default function AttendPage() {
                                     </label>
                                     <input
                                         type="text"
-                                        id="name"
-                                        name="name"
+                                        id="employeeId"
+                                        name="employeeId"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Type product name"
+                                        placeholder="Type product employeeId"
                                         required=""
                                         onChange={(e) =>
                                             setFormData({
                                                 ...formData,
-                                                name: e.target.value,
+                                                employeeId: e.target.value,
                                             })
                                         }
                                     ></input>
@@ -289,7 +284,7 @@ export default function AttendPage() {
                                         }
                                     ></input>
                                 </div>
-                                <div class="col-span-2">
+                                {/* <div class="col-span-2">
                                     <label
                                         for="description"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -302,7 +297,7 @@ export default function AttendPage() {
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Write product description here"
                                     ></textarea>
-                                </div>
+                                </div> */}
                             </div>
                             <button
                                 disabled={isButtonDisabled()}
